@@ -69,7 +69,7 @@ export default {
 
       this.error = null;
 
-      fetch('https://vue-http-demo-30f24-default-rtdb.firebaseio.com/surveys', {
+      fetch('https://vue-http-demo-30f24-default-rtdb.firebaseio.com/surveys.json', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -78,9 +78,15 @@ export default {
           name: this.enteredName,
           rating: this.chosenRating,
         })
+      }).then(response => {
+        if (response.ok) {
+          // ...
+        } else {
+          throw new Error('Could not save data!');
+        }
       }).catch(err => {
         console.log(err);
-        this.error = "Something went wrong - try again later!";
+        this.error = err.message;
       });
 
       this.enteredName = '';
